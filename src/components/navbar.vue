@@ -1,6 +1,6 @@
 <template>
-    <div class="h-24 flex justify-center bg-teal-400 font-mono">
-        <img src="../assets/images/typeherologo.svg" alt="logo">
+    <div class="h-24 flex justify-center bg-teal-600 font-mono">
+        <img src="../assets/images/typeherologowhite.svg" alt="logo">
     </div>
 </template>
 

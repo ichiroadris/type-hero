@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="h-screen bg-gray-300">
+  <div id="app" class="h-screen bg-teal-600">
     <navbar></navbar>
     <typearea></typearea>
   </div>
