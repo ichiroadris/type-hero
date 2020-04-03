@@ -1,24 +1,11 @@
-# type-hero
+### Type Hero repo
 
-## Project setup
-```
-npm install
-```
+Type hero is a simple site made for typing testing game.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
 
-### Compiles and minifies for production
-```
-npm run build
-```
 
-### Lints and fixes files
-```
-npm run lint
-```
+In progress currently....
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+> Created in Cyberjaya on 3/4/2020 by ichiroadris
