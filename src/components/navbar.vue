@@ -1,5 +1,5 @@
 <template>
-    <div class="h-24 flex justify-center bg-teal-600 font-mono">
+    <div class="flex justify-center bg-teal-600 font-mono nav">
         <img src="../assets/images/typeherologowhite.svg" alt="logo">
     </div>
 </template>
@@ -14,4 +14,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    .nav {
+        height: 15%;
+    }
 </style>
