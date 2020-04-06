@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="h-screen bg-teal-600 font-mono">
+  <div id="app" class="h-screen bg-teal-600 font-mono flex flex-col justify-between">
     <navbar></navbar>
     <typearea v-bind:randomWords="randomWords"></typearea>
     <footerapp></footerapp>
