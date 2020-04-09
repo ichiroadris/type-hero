@@ -13,7 +13,7 @@
             </div>
             <div class="flex justify-between">
                 <input
-                    v-bind:class="{ wrong: hasWrong }"
+                    v-bind:class="{ error : hasWrong }"
                     v-model="inputWord"
                     @keydown="keyin('input', $event)"
                     type="text"
@@ -75,12 +75,50 @@ export default {
 
         keyin(where, e) {
             let inputField = this.$refs.inputField;
+            let textDisplay = this.$refs.display;
             if (this.timerActive) this.inputField(e);
 
             if (this.currentWord === 0 && inputField.value === "") {
                 if (!this.timerActive) {
                     this.startTimer();
                     this.timerActive = true;
+                }
+            }
+
+            if (e.key === ' ') {
+                e.preventDefault();
+
+                if (inputField.value !== '') {
+                    const currentWordPosition = textDisplay.childNodes[this.currentWord].getBoundingClientRect();
+                    const nextWordPosition = textDisplay.childNodes[this.currentWord + 1].getBoundingClientRect();
+                    if (currentWordPosition.top < nextWordPosition.top) {
+                        for (let i = 0; i < this.currentWord + 1; i++) {
+                            textDisplay.childNodes[i].style.display = 'none';
+                        }
+                    }
+
+                    if (this.currentWord < this.wordList.length - 1) {
+                        if (inputField.value === this.wordList[this.currentWord]) {
+                            textDisplay.childNodes[this.currentWord].classList.add('correct');
+                            this.correctKeys += this.wordList[this.currentWord].length + 1;
+                        } else {
+                            textDisplay.childNodes[this.currentWord].classList.add('wrong');
+                        }
+                        textDisplay.childNodes[this.currentWord + 1].classList.add('highlight');
+                    } else if (this.currentWord === this.wordList.length - 1) {
+                        textDisplay.childNodes[this.currentWord].classList.add('wrong');
+                        this.showResult();
+                    }
+                    inputField.value = '';
+                    this.inputWord = "";
+                    this.currentWord++;
+                }
+            } else if (this.currentWord === this.wordList.length - 1) {
+                if (inputField.value + e.key === this.wordList[this.currentWord]) {
+                    textDisplay.childNodes[this.currentWord].classList.add('correct');
+                    this.correctKeys += this.wordList[this.currentWord].length;
+                    this.currentWord++;
+                    this.showResult();
                 }
             }
         },
@@ -178,8 +216,16 @@ export default {
         color: #dd6b20;
     }
 
-    .wrong {
+    .error {
         background-color: #4299e1;
+    }
+
+    .wrong {
+        color: red;
+    }
+
+    .correct {
+        color: gray;
     }
 }
 </style>
