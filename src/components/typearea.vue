@@ -6,7 +6,7 @@
                 <span v-for="(word, key) in wordList" :key="key"> {{ word }}</span>
             </div>
             <div class="flex justify-between">
-                <input v-model="inputWord" @keyup="keyin('input', $event)" type="text" name="" id="" ref="inputField" class="textarea p-3 bg-teal-600 text-white rounded-lg border-teal-600 outline-none focus:border-teal-400 border-8 text-xl md:text-2xl">
+                <input v-bind:class="{ 'wrong' :  hasWrong }" v-model="inputWord" @keydown="keyin('input', $event)" type="text" name="" id="" ref="inputField" class="textarea p-3 bg-teal-600 text-white rounded-lg border-teal-600 outline-none focus:border-teal-400 border-8 text-xl md:text-2xl">
                 <button class="redo-trigger bg-blue-800 hover:bg-blue-500 text-white font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded text-xl" @click="textRender">Redo</button>
             </div>
 
@@ -28,6 +28,7 @@
                 correctKeys: 0,
                 timerActive: false,
                 inputWord: '',
+                hasWrong: false,
                 timer: 60
             }
         },
@@ -54,11 +55,18 @@
             },
 
             inputField(e) {
+                let inputField = this.$refs.inputField;
                 if (e.key >= 'a' && e.key <= 'z' || (e.key === `'` || e.key === ',' || e.key === '.' || e.key === ';')) {
-                    let inputWordSlice = this.$refs.inputField.value + e.key;
-                    console.log(inputWordSlice);
-                    // let currentWordSlice = this.wordList[this.currentWord].slice(0, inputWordSlice.length);
-                    // this.$refs.inputField.className = inputWordSlice === currentWordSlice ? '' : 'wrong';
+                    let inputWordSlice = inputField.value + e.key;
+                    let currentWordSlice = this.wordList[this.currentWord].slice(0, inputWordSlice.length);
+                    inputWordSlice === currentWordSlice ? console.log('same') : console.log('wrong');
+                    inputWordSlice === currentWordSlice ? this.hasWrong = false : this.hasWrong = true;
+                } else if (e.key === 'Backspace') {
+                    let inputWordSlice = e.ctrlKey ? '' : inputField.value.slice(0, inputField.value.length - 1);
+                    let currentWordSlice = this.wordList[this.currentWord].slice(0, inputWordSlice.length);
+                    inputWordSlice === currentWordSlice ? this.hasWrong = false : this.hasWrong = true;
+                } else if (e.key === ' ') {
+                    this.hasWrong = false;
                 }
                 console.log(e.key);
             },
@@ -121,6 +129,10 @@
 
         .highlight {
             color:  #dd6b20;
+        }
+
+        .wrong {
+            background-color: #4299e1;
         }
     }
 
